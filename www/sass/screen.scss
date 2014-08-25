@@ -1,0 +1,127 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass";
+
+*{@include box-sizing(border-box);}
+
+html, body {
+	height: 100%;
+	width: 100%;
+	background-color:#292b3d;
+}
+
+.header{
+	position:absolute;
+	top:0;left:0;right:0;
+	height:90px;line-heignt:60px;
+	color:#000;
+	font-weight:bold;
+	font-size:18px;
+	text-transform:uppercase;
+	text-align:center;
+	background-color:#e79887;
+	h1{
+		margin-top:30px;
+	}
+}
+.view{
+	position:absolute;
+	top:60px;right:0;bottom:60px;left:0;
+}
+.nav{
+	position:absolute;
+	bottom:0;left:0;right:0;
+	height:90px;line-heignt:60px;
+	text-align:center;
+	background-color:#51526f;
+	@include clearfix;
+	a{
+	display:block;
+	width:50%;
+	height:90px; line-height:60px;
+	float:left;
+	color:red;
+	padding-top:20px;
+	@include transition-duration;
+	i{
+		margin-top:15px;
+		}
+	}
+	a:first-child{border-right:1px solid #FFF;}
+	.active{border-top:4px solid #FFF;}
+	
+}
+.panel{
+	top:0;right:0;left:0;bottom:0;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	-webkit-overflow-scrolling:touch;
+	@include transition-duration(.5s);
+}
+.left{@include transform(translate3D(-100%,0,0));}
+.centre{@include transform(translate3D(0,0,0));}
+.right{@include transform(translate3D(100%,0,0));}
+
+#map-canvas {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin-top:27px;
+	height:100%;
+	width:100%;
+}
+.information{
+	height:30%;
+	width: 70%;
+	margin: 100px auto 0 auto;
+	position:relative;
+	border:1px solid #000; 
+	background-color:#FFF;
+}
+.bouton{
+	height:50px;line-heignt:60px;
+	width:30%;
+	background-color:#41507e;
+	border:1px solid #d6e0eb;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	text-align:center;
+	float:left;
+	position:relative;
+	margin: 70px auto 0 70px;
+	padding-top:15px;
+	color:#FFF;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+.filter {
+	margin: 100px auto 0 auto;
+	padding: 20px;
+}
+.select {
+	border: 1px solid #FFF;
+	border-radius: 5px;
+	overflow: hidden;
+	width: 90%;
+	padding: 10px;
+	margin: 10px auto;
+	background: rgba(0, 0, 0, 0.5);
+	select {
+		border: none;
+		background: none;
+		margin: 0;
+		padding: 0;
+		width: 130%;
+		font-size: 140%;
+		color: #fff;
+		outline: none;
+	}
+}

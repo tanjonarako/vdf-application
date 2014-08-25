@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Markers example</title>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<style>
+    html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map-canvas {
+
+  width: 500px;
+  height: 300px;
+}
+
+
+</style>    
+  </head>
+  <body>
+<div id="map-canvas"></div>
+
+<div style="float:left;">City:<br />
+<input type="checkbox" name="city" value="north" checked=""/>Northen Territory<br />
+<input type="checkbox" name="city" value="south" checked=""/>South Astraulia <br />
+</div> 
+
+<div style="float:left;">Style:<br />
+<input type="checkbox" name="style" value="victorian" checked=""/>victorian<br />
+<input type="checkbox" name="style" value="craftsman" checked=""/>craftsman<br />
+</div> 
+
+<div style="float:left;">Type:<br />
+<input type="checkbox" name="type" value="sfh" checked=""/>Sinfle Family<br />
+<input type="checkbox" name="type" value="condo" checked=""/>Condo<br />
+<input type="checkbox" name="type" value="multi" checked=""/>Multi<br />
+
+</div> 
+
+<div style="float:left;">Bedrooms:<br />
+<input type="checkbox" name="bedrooms" value="1" checked=""/>1<br />
+<input type="checkbox" name="bedrooms" value="2" checked=""/>2<br />
+<input type="checkbox" name="bedrooms" value="3" checked=""/>3<br />
+<input type="checkbox" name="bedrooms" value="4" checked=""/>4<br />
+</div>   
+
+<br />
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>   
+    <script>
+
+var markersmap = [];
+var markers = [];       
+
+function initialize() {
+
+
+markers[0] = {long:-25.363882,lat:133.044922,'city':['north'],'style':['victorian'],'type':['sfh'],'bedrooms':['1']};
+markers[1] = {long:-26.363882,lat:133.044922,'city':['south'],'style':['victorian'],'type':['condo'],'bedrooms':['2']};
+markers[2] = {long:-27.363882,lat:133.044922,'city':['south'],'style':['victorian'],'type':['sfh'],'bedrooms':['3']};
+markers[3] = {long:-28.363882,lat:133.044922,'city':['south'],'style':['victorian'],'type':['sfh'],'bedrooms':['4']};
+markers[4] = {long:-25.363882,lat:130.044922,'city':['north'],'style':['craftsman'],'type':['condo'],'bedrooms':['1']};
+markers[5] = {long:-26.363882,lat:130.044922,'city':['south'],'style':['craftsman'],'type':['sfh'],'bedrooms':['2']};
+markers[6] = {long:-27.363882,lat:130.044922,'city':['south'],'style':['craftsman'],'type':['sfh'],'bedrooms':['3']};
+markers[7] = {long:-28.363882,lat:130.044922,'city':['south'],'style':['craftsman'],'type':['multi'],'bedrooms':['4']};
+
+  var mapOptions = {
+    zoom: 4,
+    center: new google.maps.LatLng(-25.363882,131.044922),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+
+
+
+
+
+$.each(markers, function(index, m) {
+
+
+      markersmap[index] = new google.maps.Marker({
+      position: new google.maps.LatLng(m.long,m.lat),
+      map: map
+
+      });   
+
+  });
+    jQuery.get(markers, {}, function() {
+        jQuery().find("marker").each(function() {
+            var markers = jQuery(this);
+            var latlng = new google.maps.LatLng(
+                parseFloat(markers.attr("lat")),
+                parseFloat(markers.attr("long"))
+            );
+            var marker = new google.maps.Marker({position: latlng, map: map});
+        });
+    });
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+
+
+$("input:checkbox").bind( "change", function() 
+{
+    $.each(markers, function(index, m) 
+    {
+        if(
+
+        (
+        ($.inArray('south',m.city)>-1 && $("input:checkbox[name='city'][value='south']").is(':checked')) ||
+        ($.inArray('north',m.city)>-1 && $("input:checkbox[name='city'][value='north']").is(':checked'))
+        ) &&
+        (
+        ($.inArray('victorian',m.style)>-1 && $("input:checkbox[name='style'][value='victorian']").is(':checked')) ||
+        ($.inArray('craftsman',m.style)>-1 && $("input:checkbox[name='style'][value='craftsman']").is(':checked'))
+        ) &&
+        (
+        ($.inArray('sfh',m.type)>-1 && $("input:checkbox[name='type'][value='sfh']").is(':checked')) ||
+        ($.inArray('condo',m.type)>-1 && $("input:checkbox[name='type'][value='condo']").is(':checked')) ||
+        ($.inArray('multi',m.type)>-1 && $("input:checkbox[name='type'][value='multi']").is(':checked')) 
+        )&&
+        (
+        ($.inArray('1',m.bedrooms)>-1 && $("input:checkbox[name='bedrooms'][value='1']").is(':checked')) ||
+        ($.inArray('2',m.bedrooms)>-1 && $("input:checkbox[name='bedrooms'][value='2']").is(':checked')) ||
+        ($.inArray('3',m.bedrooms)>-1 && $("input:checkbox[name='bedrooms'][value='3']").is(':checked')) ||
+        ($.inArray('4',m.bedrooms)>-1 && $("input:checkbox[name='bedrooms'][value='4']").is(':checked')) 
+        )
+        )
+        {
+            markersmap[index].setVisible(true);
+        } 
+        else
+        {
+            markersmap[index].setVisible(false);
+        }
+    })  
+});
+
+</script>    
+  </body>
+</html>
